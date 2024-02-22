@@ -9,7 +9,7 @@ export default function Modal({ imgSrc, imgName, imgLocation, getImg }) {
         onClick={getImg}
       >
         <img
-          src="src\assets\x.svg"
+          src="public\x.svg"
           alt=""
           width={40}
           height={40}
