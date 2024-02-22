@@ -53,7 +53,7 @@ export default function SearchBar() {
       <div>
         <div className="bg-slate-200  w-full ">
           <img
-            src="src\assets\searchIcon.svg"
+            src="src/assets/searchIcon.svg"
             width="20"
             height="20"
             className="absolute top-[115px] left-12"
