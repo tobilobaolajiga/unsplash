@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import Modal from '../Modal';
 import axios from 'axios';
+import Button from './Button';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import Dropdown from './Dropdown';
+import MagicBar from '../MagicBar';
 
 const API_URL = 'https://api.unsplash.com/search/photos';
 const IMAGES_PER_PAGE = 12;
@@ -17,18 +21,20 @@ export default function SearchBar() {
         }&page=1&per_page=${IMAGES_PER_PAGE}&client_id=JN9xKlscrc6cnYxRMM9KXg6y-iURu3w31LiLoXwmzkc`
       );
       const results = data.results;
-
+      const total = data.total_pages;
       setImages(results);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchImages();
   }, []);
+
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log(searchInput.current.value);
+
     fetchImages();
   };
 
@@ -51,21 +57,12 @@ export default function SearchBar() {
   return (
     <div>
       <div>
-        <div className="bg-slate-200  w-full ">
-          <img
-            src="./searchIcon.svg"
-            width="20"
-            height="20"
-            className="absolute top-[115px] left-12"
-          />
-          <form onSubmit={handleSearch}>
-            <input
-              type="search"
-              placeholder="Search for photo"
-              className="px-10 py-[12px] border mx-[34px] my-[100px] rounded-lg w-[1300px] placeholder:text-slate-500 placeholder:text-sm outline-none border-none"
-              ref={searchInput}
-            />
-          </form>
+        <div className="bg-slate-200">
+          <p className="text-center text-[80px] pt-10">PicSource</p>
+          <MagicBar handleSearch={handleSearch} searchInput={searchInput} />
+        </div>
+        <div>
+          <Dropdown />
         </div>
         <div className="relative bottom-[130px] z-50">
           <div className="grid grid-cols-3 mx-12 mt-8  p-0">
@@ -87,6 +84,7 @@ export default function SearchBar() {
                   <img
                     src={image.urls.small}
                     className="rounded-md relative top-12 -z-30 h-80 object-cover w-full"
+                    loading="lazy"
                   />
                   <div className="ml-2 mb-2">
                     <p className="text-white font-bold text-sm">
